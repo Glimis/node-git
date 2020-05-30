@@ -15,7 +15,7 @@ function run(str){
 void async function(){
     try{
         let str = await run('git status')
-        if(str.indexOf('nothing to commit, working tree clean') == -1){
+        if(str.indexOf(`use "git push" to publish your local commits`)>-1 || str.indexOf('nothing to commit, working tree clean') == -1){
             // 包含未提交部分
             console.log(str)
             return
