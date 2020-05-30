@@ -24,6 +24,7 @@ void async function(){
             return
         }
     }catch(e){
+        // 处理push时,自行git push --set-upstream origin
         // 可能git不存在
         console.log(e)
         return; 
@@ -49,11 +50,12 @@ void async function(){
 
     // 4. 拉取代码
     try{
-        await run('git checkout pull')
+        await run('git  pull')
     }catch(e){
+        // 自行git push --set-upstream origin
         console.log(e)
         return; 
     }
-    
+    // test中理论只合并与解决冲突
 
 }()
