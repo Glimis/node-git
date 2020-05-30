@@ -19,14 +19,20 @@ void async function(){
     // 1. 检测状态
     try{
         let str = await run('git status')
-        if(str.indexOf(`use "git push" to publish your local commits`)>-1 || str.indexOf('nothing to commit, working tree clean') == -1){
+        if(str.indexOf('nothing to commit, working tree clean') == -1){
             // 包含未提交部分
-            console.log(str)
-            return
+           throw new Error(str)
+
+        }else{
+            if(str.indexOf(`use "git push" to publish your local commits`)>-1 ){
+                // 主动提交
+                await run('git push')
+            }
         }
     }catch(e){
         // 处理push时,自行git push --set-upstream origin
         // 可能git不存在
+        console.log('提交 -- 注意commit格式')
         console.log(e)
         return; 
     }
