@@ -15,9 +15,11 @@ function run(str){
 void async function(){
     try{
         let str = await run('git status')
-        console.log(str.indexOf('Changes not staged for commit')>-1)
-        console.log(str.indexOf('Changes to be committed:')>-1)
-        
+        if(str.indexOf('nothing to commit, working tree clean') == -1){
+            // 包含未提交部分
+            console.log(str)
+            return
+        }
     }catch(e){
         // 可能git不存在
         console.log(e)
