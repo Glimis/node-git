@@ -17,6 +17,7 @@ function run(str){
 
 void async function(){
     try{
+
         let str = await run('git status')
         if(str.indexOf('nothing to commit, working tree clean') == -1){
             // 包含未提交部分
@@ -46,7 +47,7 @@ void async function(){
 
         // 6. 查看冲突
     
-        let str = await run(`git  status`)
+        str = await run(`git  status`)
         if(str.indexOf('both modified')>-1){
             throw new Error(str)
         }
