@@ -12,7 +12,10 @@ function run(str){
     })
 }
 
+
+
 void async function(){
+    // 1. 检测状态
     try{
         let str = await run('git status')
         if(str.indexOf(`use "git push" to publish your local commits`)>-1 || str.indexOf('nothing to commit, working tree clean') == -1){
@@ -25,6 +28,17 @@ void async function(){
         console.log(e)
         return; 
     }
+    // 2.读取当前分支名称
+    let branch;
+    try{
+        branch = await run('git branch')
+        branch = branch.match(/\* (.*)/)[1]
+    }catch(e){
+        console.log(e)
+        return; 
+    }
+
+    // 3. 跳转测试分支
     try{
         await run('git checkout test')
     }catch(e){
@@ -32,12 +46,14 @@ void async function(){
         console.log(e)
         return; 
     }
+
+    // 4. 拉取代码
     try{
         await run('git checkout pull')
     }catch(e){
-        // 可能不存在test
         console.log(e)
         return; 
     }
+    
 
 }()
